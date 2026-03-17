@@ -47,11 +47,29 @@ const TransactionModal = ({ onClose }: TransactionModalProps) => {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
     setError(null);
+  };
+
+  const DESCRIPTION_MAX_LENGTH = 100;
+
+  const formatDescription = (text: string): string => {
+    const trimmed = text.trim();
+    if (!trimmed) return trimmed;
+
+    if (
+      trimmed === trimmed.toUpperCase() &&
+      trimmed !== trimmed.toLowerCase()
+    ) {
+      return trimmed.charAt(0) + trimmed.slice(1).toLowerCase();
+    }
+
+    return trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -60,6 +78,19 @@ const TransactionModal = ({ onClose }: TransactionModalProps) => {
     const amount = parseFloat(form.amount);
     if (!form.amount || isNaN(amount) || amount <= 0) {
       setError('Please enter a valid amount greater than 0');
+      return;
+    }
+
+    const trimmedDescription = form.description.trim();
+    if (!trimmedDescription) {
+      setError('Please enter a description');
+      return;
+    }
+
+    if (trimmedDescription.length > DESCRIPTION_MAX_LENGTH) {
+      setError(
+        `Description must be ${DESCRIPTION_MAX_LENGTH} characters or less`,
+      );
       return;
     }
 
@@ -72,7 +103,10 @@ const TransactionModal = ({ onClose }: TransactionModalProps) => {
     setError(null);
 
     try {
-      await createTransaction(user.id, form);
+      await createTransaction(user.id, {
+        ...form,
+        description: formatDescription(form.description),
+      });
       setForm(INITIAL_FORM);
       onClose();
     } catch (err) {
@@ -102,7 +136,11 @@ const TransactionModal = ({ onClose }: TransactionModalProps) => {
           </button>
         </div>
 
-        <form className={'transaction-modal-form'} onSubmit={handleSubmit} noValidate>
+        <form
+          className={'transaction-modal-form'}
+          onSubmit={handleSubmit}
+          noValidate
+        >
           {/* Type toggle */}
           <div className={'transaction-type-toggle'}>
             <button
@@ -127,7 +165,9 @@ const TransactionModal = ({ onClose }: TransactionModalProps) => {
               Amount
             </label>
             <div className={'transaction-amount-wrapper'}>
-              <span className={'transaction-currency'}>{form.type === 'expense' ? '−' : '+'}</span>
+              <span className={'transaction-currency'}>
+                {form.type === 'expense' ? '−' : '+'}
+              </span>
               <input
                 id={'amount'}
                 type={'number'}
@@ -147,7 +187,7 @@ const TransactionModal = ({ onClose }: TransactionModalProps) => {
           {/* Description */}
           <div className={'transaction-form-group'}>
             <label className={'transaction-form-label'} htmlFor={'description'}>
-              Description <span className={'optional'}>(optional)</span>
+              Description
             </label>
             <textarea
               id={'description'}
@@ -156,8 +196,13 @@ const TransactionModal = ({ onClose }: TransactionModalProps) => {
               placeholder={'What was this for?'}
               value={form.description}
               onChange={handleChange}
+              maxLength={DESCRIPTION_MAX_LENGTH}
               rows={3}
+              required
             />
+            <span className={'transaction-char-counter'}>
+              {form.description.length}/{DESCRIPTION_MAX_LENGTH}
+            </span>
           </div>
 
           {error && (

@@ -13,7 +13,10 @@
   cursor: pointer;
   border: none;
   box-shadow: 0 4px 16px rgba(0, 123, 255, 0.35);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
   z-index: 100;
 
   &:hover {
@@ -45,8 +48,12 @@
 }
 
 @keyframes overlay-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* ── Modal panel ── */
@@ -71,13 +78,25 @@
 }
 
 @keyframes modal-slide-up {
-  from { transform: translateY(100%); opacity: 0; }
-  to   { transform: translateY(0);    opacity: 1; }
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes modal-scale-in {
-  from { transform: scale(0.92); opacity: 0; }
-  to   { transform: scale(1);    opacity: 1; }
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* ── Header ── */
@@ -114,7 +133,9 @@
     background: #2a2a3e;
     color: #9ca3af;
 
-    &:hover { background: #33334a; }
+    &:hover {
+      background: #33334a;
+    }
   }
 }
 
@@ -148,7 +169,10 @@
   cursor: pointer;
   background: transparent;
   color: #888;
-  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  transition:
+    background 0.18s,
+    color 0.18s,
+    box-shadow 0.18s;
 
   &.active.expense {
     background: #fff;
@@ -217,7 +241,9 @@
     background: #2a2a3e;
     border-color: #374151;
 
-    &:focus-within { border-color: #3b82f6; }
+    &:focus-within {
+      border-color: #3b82f6;
+    }
   }
 }
 
@@ -270,7 +296,20 @@
     background: #2a2a3e;
     border-color: #374151;
 
-    &:focus { border-color: #3b82f6; }
+    &:focus {
+      border-color: #3b82f6;
+    }
+  }
+}
+
+/* Char counter */
+.transaction-char-counter {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  text-align: right;
+
+  @media (prefers-color-scheme: dark) {
+    color: #6b7280;
   }
 }
 
@@ -293,7 +332,9 @@
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: opacity 0.15s, transform 0.1s;
+  transition:
+    opacity 0.15s,
+    transform 0.1s;
   margin-top: 0.25rem;
 
   &:hover:not(:disabled) {
