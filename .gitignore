@@ -4,3 +4,4 @@ yarn.lock
 
 # macOS
 .DS_Store
+/app/generated/prisma

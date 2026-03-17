@@ -3,6 +3,7 @@
     "ignoreDeprecations": "6.0",
     "target": "ES2020",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "types": ["node"],
     "jsx": "react-jsx",
     "module": "ESNext",
     "moduleResolution": "bundler",
@@ -10,7 +11,6 @@
     "allowJs": true,
     "checkJs": false,
     "outDir": "./build",
-    "rootDir": "./app",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -30,6 +30,6 @@
       "locale": ["locale/index"]
     }
   },
-  "include": ["app/**/*"],
+  "include": ["app/**/*", "prisma.config.ts"],
   "exclude": ["node_modules", "build"]
 }
