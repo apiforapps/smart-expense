@@ -27,7 +27,7 @@ export const Header = () => {
         <SignInButton mode={'modal'}>
           <button className={'authButton'}>
             <LogIn size={16} />
-            Войти
+            Login
           </button>
         </SignInButton>
       )}
