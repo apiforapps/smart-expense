@@ -7,7 +7,11 @@ import { Greeting } from 'components/greeting';
 import { AddTransaction } from 'components/transaction';
 
 export const Home = () => {
-  const { user } = useUser();
+  const { user, isLoaded } = useUser();
+
+  if (!isLoaded) {
+    return null;
+  }
 
   if (!user) {
     return <Guest />;

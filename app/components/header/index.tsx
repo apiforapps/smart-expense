@@ -5,7 +5,7 @@ import { syncUser } from './api';
 import './Header.scss';
 
 export const Header = () => {
-  const { isSignedIn } = useAuth();
+  const { isSignedIn, isLoaded } = useAuth();
   const { user } = useUser();
 
   useEffect(() => {
@@ -21,16 +21,17 @@ export const Header = () => {
         Smart Expense
       </div>
 
-      {isSignedIn ? (
-        <UserButton />
-      ) : (
-        <SignInButton mode={'modal'}>
-          <button className={'authButton'}>
-            <LogIn size={16} />
-            Login
-          </button>
-        </SignInButton>
-      )}
+      {isLoaded &&
+        (isSignedIn ? (
+          <UserButton />
+        ) : (
+          <SignInButton mode={'modal'}>
+            <button className={'authButton'}>
+              <LogIn size={16} />
+              Login
+            </button>
+          </SignInButton>
+        ))}
     </header>
   );
 };
