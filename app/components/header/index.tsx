@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { SignInButton, UserButton, useAuth, useUser } from '@clerk/react';
 import { LogIn, Wallet } from 'lucide-react';
-import { checkUser } from 'utils/checkUser';
+import { syncUser } from './api';
 import './Header.scss';
 
 export const Header = () => {
@@ -9,7 +9,7 @@ export const Header = () => {
   const { user } = useUser();
 
   useEffect(() => {
-    checkUser(user);
+    syncUser(user);
   }, [user]);
 
   return (

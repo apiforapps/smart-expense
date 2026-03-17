@@ -1,89 +1,25 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { PrismaClient } from './app/generated/prisma/client';
-import { PrismaPg } from '@prisma/adapter-pg';
 import 'dotenv/config';
 
+import { usersRouter } from './server/routes/users';
+import { transactionsRouter } from './server/routes/transactions';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-declare global {
-  var prisma: InstanceType<typeof PrismaClient> | undefined;
-}
-
-const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
-const db = globalThis.prisma || new PrismaClient({ adapter });
-if (process.env.NODE_ENV !== 'production') {
-  globalThis.prisma = db;
-}
 
 const app = express();
 
 app.use(express.json());
 
 // API routes
-app.post('/api/check-user', async (req, res) => {
-  const { clerkUserId, name, imageUrl, email } = req.body;
-
-  if (!clerkUserId || !email) {
-    return res.status(400).json({ error: 'Missing required fields' });
-  }
-
-  try {
-    let user = await db.user.findUnique({
-      where: { clerkUserId },
-    });
-
-    if (!user) {
-      user = await db.user.create({
-        data: { clerkUserId, name, imageUrl, email },
-      });
-    }
-
-    return res.json(user);
-  } catch (err) {
-    console.error('check-user error:', err);
-    return res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-app.post('/api/transactions', async (req, res) => {
-  const { clerkUserId, amount, description } = req.body;
-
-  if (!clerkUserId || amount === undefined || amount === null) {
-    return res.status(400).json({ error: 'Missing required fields' });
-  }
-
-  const numericAmount = Number(amount);
-  if (isNaN(numericAmount)) {
-    return res.status(400).json({ error: 'Amount must be a number' });
-  }
-
-  try {
-    const user = await db.user.findUnique({ where: { clerkUserId } });
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    const transaction = await db.transaction.create({
-      data: {
-        userId: clerkUserId,
-        amount: numericAmount,
-        description: description ?? null,
-      },
-    });
-
-    return res.status(201).json(transaction);
-  } catch (err) {
-    console.error('create-transaction error:', err);
-    return res.status(500).json({ error: 'Internal server error' });
-  }
-});
+app.use('/api', usersRouter);
+app.use('/api/transactions', transactionsRouter);
 
 // Serve frontend
 app.use(express.static('build'));
 
-app.get('{*path}', (req, res) =>
+app.get('{*path}', (_req, res) =>
   res.sendFile('index.html', { root: path.join(__dirname, 'build') }),
 );
 
@@ -93,10 +29,8 @@ const server = app.listen(PORT, () =>
   console.log(`Server running on port ${PORT}`),
 );
 
-// Handle unhandled promise rejections
-process.on('unhandledRejection', (err: unknown, promise) => {
-  console.log(`Error: ${err instanceof Error ? err.message : err}`);
-  // Close server and exit process
+process.on('unhandledRejection', (err: unknown) => {
+  console.error(`Unhandled rejection: ${err instanceof Error ? err.message : err}`);
   server.close(() => process.exit(1));
 });
 
