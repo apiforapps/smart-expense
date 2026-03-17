@@ -6,7 +6,7 @@ export const Layout = () => {
   return (
     <Fragment>
       <Header />
-      <main>
+      <main className="main">
         <Outlet />
       </main>
     </Fragment>

@@ -116,6 +116,7 @@ input,
 select,
 textarea {
   outline: none;
+
   &:focus {
     outline: none;
   }
@@ -138,10 +139,16 @@ ul li a.active {
   color: #3498db;
 }
 
-.article {
+.main {
   width: 100vw;
   height: 100vh;
   display: flex;
+  justify-content: center;
+}
+
+.article {
+  max-width: 450px;
+  min-width: 370px;
 }
 
 .section {
