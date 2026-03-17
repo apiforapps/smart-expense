@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 // Update the path below to the actual location of MainLayout, for example:
-import { Layout } from 'components/ui/Layout';
+import { Layout } from 'components/layout';
 import { Home } from 'pages/Home';
 
 const router = createBrowserRouter(

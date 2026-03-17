@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { PrismaClient } from './app/generated/prisma/client';
@@ -62,9 +62,7 @@ const server = app.listen(PORT, () =>
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err: unknown, promise) => {
-  console.log(
-    `\x1b[31mError: ${err instanceof Error ? err.message : err}\x1b[0m`,
-  );
+  console.log(`Error: ${err instanceof Error ? err.message : err}`);
   // Close server and exit process
   server.close(() => process.exit(1));
 });
