@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { SignInButton, UserButton, useAuth, useUser } from '@clerk/react';
 import { LogIn, Wallet } from 'lucide-react';
+import { ThemeToggle } from 'components/theme-toggle';
 import { syncUser } from './api';
 import './Header.scss';
 
@@ -21,17 +22,20 @@ export const Header = () => {
         Smart Expense
       </div>
 
-      {isLoaded &&
-        (isSignedIn ? (
-          <UserButton />
-        ) : (
-          <SignInButton mode={'modal'}>
-            <button className={'authButton'}>
-              <LogIn size={16} />
-              Login
-            </button>
-          </SignInButton>
-        ))}
+      <div className={'headerActions'}>
+        <ThemeToggle />
+        {isLoaded &&
+          (isSignedIn ? (
+            <UserButton />
+          ) : (
+            <SignInButton mode={'modal'}>
+              <button className={'authButton'}>
+                <LogIn size={16} />
+                Login
+              </button>
+            </SignInButton>
+          ))}
+      </div>
     </header>
   );
 };

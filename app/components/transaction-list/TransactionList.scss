@@ -1,28 +1,22 @@
 .transaction-list-card {
-  background: #fff;
+  background: var(--color-bg);
   border-radius: 16px;
   padding: 1.25rem 1rem;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
-
-  @media (prefers-color-scheme: dark) {
-    background: #1e1e2e;
-    color: #e2e8f0;
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
-  }
+  box-shadow: var(--shadow-card);
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    color 0.3s ease;
 }
 
 .transaction-list-title {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #6b7280;
+  color: var(--color-text-2);
   text-transform: uppercase;
   letter-spacing: 0.04em;
   margin-bottom: 0.75rem;
   padding: 0 0.25rem;
-
-  @media (prefers-color-scheme: dark) {
-    color: #9ca3af;
-  }
 }
 
 .transaction-list {
@@ -38,14 +32,10 @@
 .transaction-date-header {
   font-size: 0.7rem;
   font-weight: 600;
-  color: #9ca3af;
+  color: var(--color-text-3);
   text-transform: uppercase;
   letter-spacing: 0.04em;
   padding: 0.625rem 0.25rem 0.375rem;
-
-  @media (prefers-color-scheme: dark) {
-    color: #6b7280;
-  }
 }
 
 /* ── Transaction item ── */
@@ -59,16 +49,10 @@
   border-radius: 8px;
 
   &:hover {
-    background: #f7f7fc;
+    background: var(--color-surface);
 
     .transaction-delete-btn {
       opacity: 1;
-    }
-  }
-
-  @media (prefers-color-scheme: dark) {
-    &:hover {
-      background: #2a2a3e;
     }
   }
 }
@@ -77,22 +61,12 @@
   height: 1px;
   background: repeating-linear-gradient(
     to right,
-    #e5e7eb 0,
-    #e5e7eb 4px,
+    var(--color-border) 0,
+    var(--color-border) 4px,
     transparent 4px,
     transparent 8px
   );
   margin: 0 0.5rem;
-
-  @media (prefers-color-scheme: dark) {
-    background: repeating-linear-gradient(
-      to right,
-      #374151 0,
-      #374151 4px,
-      transparent 4px,
-      transparent 8px
-    );
-  }
 }
 
 .transaction-info {
@@ -106,23 +80,16 @@
 .transaction-description {
   font-size: 0.9rem;
   font-weight: 500;
-  color: #1a1a2e;
+  color: var(--color-text-heading);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-
-  @media (prefers-color-scheme: dark) {
-    color: #f1f5f9;
-  }
+  transition: color 0.3s ease;
 }
 
 .transaction-time {
   font-size: 0.7rem;
-  color: #9ca3af;
-
-  @media (prefers-color-scheme: dark) {
-    color: #6b7280;
-  }
+  color: var(--color-text-3);
 }
 
 .transaction-right {
@@ -138,21 +105,11 @@
   white-space: nowrap;
 
   &.income {
-    color: #22c55e;
+    color: var(--color-income);
   }
 
   &.expense {
-    color: #ef4444;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    &.income {
-      color: #4ade80;
-    }
-
-    &.expense {
-      color: #f87171;
-    }
+    color: var(--color-expense);
   }
 }
 
@@ -165,7 +122,7 @@
   border: none;
   border-radius: 6px;
   background: transparent;
-  color: #9ca3af;
+  color: var(--color-text-3);
   cursor: pointer;
   opacity: 0;
   transition:
@@ -174,22 +131,13 @@
     color 0.15s;
 
   &:hover:not(:disabled) {
-    background: rgba(239, 68, 68, 0.1);
-    color: #ef4444;
+    background: var(--color-expense-bg);
+    color: var(--color-expense);
   }
 
   &:disabled {
     opacity: 0.4;
     cursor: not-allowed;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    color: #6b7280;
-
-    &:hover:not(:disabled) {
-      background: rgba(248, 113, 113, 0.12);
-      color: #f87171;
-    }
   }
 }
 
@@ -208,7 +156,7 @@
 }
 
 .skeleton-bar {
-  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background: linear-gradient(90deg, var(--skeleton-base) 25%, var(--skeleton-shine) 50%, var(--skeleton-base) 75%);
   background-size: 200% 100%;
   border-radius: 4px;
   animation: skeleton-shimmer 1.5s infinite ease-in-out;
@@ -226,11 +174,6 @@
   &.medium {
     width: 80px;
     height: 14px;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    background: linear-gradient(90deg, #2a2a3e 25%, #33334a 50%, #2a2a3e 75%);
-    background-size: 200% 100%;
   }
 }
 
@@ -255,27 +198,19 @@
 .transaction-empty-text {
   font-size: 0.95rem;
   font-weight: 600;
-  color: #6b7280;
+  color: var(--color-text-2);
   margin-bottom: 0.25rem;
-
-  @media (prefers-color-scheme: dark) {
-    color: #9ca3af;
-  }
 }
 
 .transaction-empty-sub {
   font-size: 0.8rem;
-  color: #9ca3af;
-
-  @media (prefers-color-scheme: dark) {
-    color: #6b7280;
-  }
+  color: var(--color-text-3);
 }
 
 /* ── Error ── */
 .transaction-error {
   font-size: 0.85rem;
-  color: #ef4444;
+  color: var(--color-expense);
   text-align: center;
   margin-bottom: 0.5rem;
 }
@@ -284,10 +219,10 @@
   display: block;
   margin: 0 auto;
   padding: 0.5rem 1.25rem;
-  border: 1.5px solid #e5e7eb;
+  border: 1.5px solid var(--color-border);
   border-radius: 10px;
   background: transparent;
-  color: #6b7280;
+  color: var(--color-text-2);
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
@@ -296,17 +231,7 @@
     border-color 0.15s;
 
   &:hover {
-    background: #f7f7fc;
-    border-color: #d1d5db;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    border-color: #374151;
-    color: #9ca3af;
-
-    &:hover {
-      background: #2a2a3e;
-      border-color: #4b5563;
-    }
+    background: var(--color-surface);
+    border-color: var(--color-border-strong);
   }
 }

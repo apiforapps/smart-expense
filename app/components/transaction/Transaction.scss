@@ -5,14 +5,14 @@
   width: 60px;
   height: 60px;
   border-radius: 8px;
-  background-color: #007bff;
+  background-color: var(--color-primary);
   color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   border: none;
-  box-shadow: 0 4px 16px rgba(0, 123, 255, 0.35);
+  box-shadow: var(--shadow-fab);
   transition:
     transform 0.15s ease,
     box-shadow 0.15s ease,
@@ -22,7 +22,7 @@
   &:hover {
     opacity: 0.9;
     transform: scale(1.06);
-    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.45);
+    box-shadow: var(--shadow-fab-hover);
   }
 
   &:active {
@@ -58,18 +58,17 @@
 
 /* ── Modal panel ── */
 .transaction-modal {
-  background: #fff;
+  background: var(--color-bg);
   border-radius: 20px 20px 0 0;
   width: 100%;
   max-width: 480px;
   padding: 1.5rem 1.25rem 2.5rem;
-  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-modal);
+  color: var(--color-text-1);
   animation: modal-slide-up 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-
-  @media (prefers-color-scheme: dark) {
-    background: #1e1e2e;
-    color: #e2e8f0;
-  }
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
 
   @media (min-width: 500px) {
     border-radius: 20px;
@@ -120,22 +119,13 @@
   height: 32px;
   border: none;
   border-radius: 50%;
-  background: #f0f0f5;
-  color: #555;
+  background: var(--color-surface);
+  color: var(--color-text-2);
   cursor: pointer;
   transition: background 0.15s;
 
   &:hover {
-    background: #e2e2ec;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    background: #2a2a3e;
-    color: #9ca3af;
-
-    &:hover {
-      background: #33334a;
-    }
+    background: var(--color-surface-hover);
   }
 }
 
@@ -150,13 +140,10 @@
 .transaction-type-toggle {
   display: flex;
   gap: 0.5rem;
-  background: #f0f0f5;
+  background: var(--color-surface);
   padding: 4px;
   border-radius: 10px;
-
-  @media (prefers-color-scheme: dark) {
-    background: #2a2a3e;
-  }
+  transition: background 0.3s ease;
 }
 
 .transaction-type-btn {
@@ -168,36 +155,22 @@
   font-weight: 600;
   cursor: pointer;
   background: transparent;
-  color: #888;
+  color: var(--color-text-3);
   transition:
     background 0.18s,
     color 0.18s,
     box-shadow 0.18s;
 
   &.active.expense {
-    background: #fff;
-    color: #ef4444;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+    background: var(--color-bg);
+    color: var(--color-expense);
+    box-shadow: var(--shadow-toggle);
   }
 
   &.active.income {
-    background: #fff;
-    color: #22c55e;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    color: #6b7280;
-
-    &.active.expense {
-      background: #1e1e2e;
-      color: #f87171;
-    }
-
-    &.active.income {
-      background: #1e1e2e;
-      color: #4ade80;
-    }
+    background: var(--color-bg);
+    color: var(--color-income);
+    box-shadow: var(--shadow-toggle);
   }
 }
 
@@ -211,14 +184,14 @@
 .transaction-form-label {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #6b7280;
+  color: var(--color-text-2);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 
   .optional {
     font-weight: 400;
     text-transform: none;
-    color: #9ca3af;
+    color: var(--color-text-3);
   }
 }
 
@@ -227,30 +200,23 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: #f7f7fc;
-  border: 1.5px solid #e5e7eb;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
   border-radius: 10px;
   padding: 0 1rem;
-  transition: border-color 0.15s;
+  transition:
+    border-color 0.15s,
+    background 0.3s ease;
 
   &:focus-within {
-    border-color: #007bff;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    background: #2a2a3e;
-    border-color: #374151;
-
-    &:focus-within {
-      border-color: #3b82f6;
-    }
+    border-color: var(--color-focus);
   }
 }
 
 .transaction-currency {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #9ca3af;
+  color: var(--color-text-3);
   user-select: none;
 }
 
@@ -277,47 +243,36 @@
 
 /* Textarea */
 .transaction-form-textarea {
-  border: 1.5px solid #e5e7eb;
+  border: 1.5px solid var(--color-border);
   border-radius: 10px;
   padding: 0.75rem 1rem;
   font-size: 0.9rem;
   resize: none;
   color: inherit;
-  background: #f7f7fc;
+  background: var(--color-surface);
   font-family: inherit;
-  transition: border-color 0.15s;
+  transition:
+    border-color 0.15s,
+    background 0.3s ease;
   line-height: 1.5;
 
   &:focus {
-    border-color: #007bff;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    background: #2a2a3e;
-    border-color: #374151;
-
-    &:focus {
-      border-color: #3b82f6;
-    }
+    border-color: var(--color-focus);
   }
 }
 
 /* Char counter */
 .transaction-char-counter {
   font-size: 0.75rem;
-  color: #9ca3af;
+  color: var(--color-text-3);
   text-align: right;
-
-  @media (prefers-color-scheme: dark) {
-    color: #6b7280;
-  }
 }
 
 /* Error */
 .transaction-error {
   font-size: 0.85rem;
-  color: #ef4444;
-  background: rgba(239, 68, 68, 0.08);
+  color: var(--color-expense);
+  background: var(--color-expense-bg);
   border-radius: 8px;
   padding: 0.5rem 0.75rem;
 }
@@ -327,7 +282,7 @@
   padding: 0.875rem;
   border: none;
   border-radius: 12px;
-  background: #007bff;
+  background: var(--color-primary);
   color: #fff;
   font-size: 1rem;
   font-weight: 600;

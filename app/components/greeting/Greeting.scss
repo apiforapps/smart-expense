@@ -1,8 +1,13 @@
 .greeting {
   font-size: 1rem;
   font-weight: 400;
+  color: var(--color-text-2);
+  transition: color 0.3s ease;
+
   &-name {
     font-size: 1.25rem;
     font-weight: 600;
+    color: var(--color-text-heading);
+    transition: color 0.3s ease;
   }
 }
