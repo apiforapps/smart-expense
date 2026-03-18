@@ -1,0 +1,240 @@
+/* ── Balance card ── */
+.balance-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  @media (prefers-color-scheme: dark) {
+    background: #1e1e2e;
+    color: #e2e8f0;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* ── Label ── */
+.balance-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+
+  @media (prefers-color-scheme: dark) {
+    color: #9ca3af;
+  }
+}
+
+/* ── Amount ── */
+.balance-amount {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+
+  &.negative {
+    color: #ef4444;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    color: #f1f5f9;
+
+    &.negative {
+      color: #f87171;
+    }
+  }
+}
+
+/* ── Breakdown row ── */
+.balance-breakdown {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #f7f7fc;
+  border-radius: 12px;
+  padding: 0.875rem 1rem;
+
+  @media (prefers-color-scheme: dark) {
+    background: #2a2a3e;
+  }
+}
+
+.balance-divider {
+  width: 1px;
+  height: 32px;
+  background: #e5e7eb;
+  flex-shrink: 0;
+
+  @media (prefers-color-scheme: dark) {
+    background: #374151;
+  }
+}
+
+/* ── Income / Expense item ── */
+.balance-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.balance-item-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  &.income {
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+  }
+
+  &.expense {
+    background: rgba(239, 68, 68, 0.12);
+    color: #ef4444;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    &.income {
+      background: rgba(74, 222, 128, 0.12);
+      color: #4ade80;
+    }
+
+    &.expense {
+      background: rgba(248, 113, 113, 0.12);
+      color: #f87171;
+    }
+  }
+}
+
+.balance-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.balance-item-label {
+  font-size: 0.5rem;
+  font-weight: 500;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+
+  @media (prefers-color-scheme: dark) {
+    color: #6b7280;
+  }
+}
+
+.balance-item-value {
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &.income {
+    color: #22c55e;
+  }
+
+  &.expense {
+    color: #ef4444;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    &.income {
+      color: #4ade80;
+    }
+
+    &.expense {
+      color: #f87171;
+    }
+  }
+}
+
+/* ── Skeleton loading ── */
+.balance-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.skeleton-line {
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  border-radius: 6px;
+  animation: skeleton-shimmer 1.5s infinite ease-in-out;
+
+  @media (prefers-color-scheme: dark) {
+    background: linear-gradient(90deg, #2a2a3e 25%, #33334a 50%, #2a2a3e 75%);
+    background-size: 200% 100%;
+  }
+}
+
+.skeleton-title {
+  width: 100px;
+  height: 14px;
+}
+
+.skeleton-amount {
+  width: 180px;
+  height: 32px;
+}
+
+.skeleton-item {
+  flex: 1;
+  height: 40px;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ── Error state ── */
+.balance-error {
+  font-size: 0.85rem;
+  color: #ef4444;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.balance-retry-button {
+  align-self: center;
+  padding: 0.5rem 1.25rem;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  background: transparent;
+  color: #6b7280;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+
+  &:hover {
+    background: #f7f7fc;
+    border-color: #d1d5db;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    border-color: #374151;
+    color: #9ca3af;
+
+    &:hover {
+      background: #2a2a3e;
+      border-color: #4b5563;
+    }
+  }
+}
