@@ -3,6 +3,66 @@ import { db } from '../db';
 
 export const transactionsRouter = Router();
 
+transactionsRouter.get('/', async (req: Request, res: Response) => {
+  const { clerkUserId } = req.query;
+
+  if (!clerkUserId || typeof clerkUserId !== 'string') {
+    return res.status(400).json({ error: 'Missing clerkUserId parameter' });
+  }
+
+  try {
+    const user = await db.user.findUnique({ where: { clerkUserId } });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const transactions = await db.transaction.findMany({
+      where: { userId: clerkUserId },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    return res.json(transactions);
+  } catch (err) {
+    console.error('get-transactions error:', err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+transactionsRouter.delete('/:id', async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { clerkUserId } = req.body;
+
+  const numericId = Number(id);
+  if (isNaN(numericId)) {
+    return res.status(400).json({ error: 'Invalid transaction ID' });
+  }
+
+  if (!clerkUserId || typeof clerkUserId !== 'string') {
+    return res.status(400).json({ error: 'Missing clerkUserId' });
+  }
+
+  try {
+    const transaction = await db.transaction.findUnique({
+      where: { id: numericId },
+    });
+
+    if (!transaction) {
+      return res.status(404).json({ error: 'Transaction not found' });
+    }
+
+    if (transaction.userId !== clerkUserId) {
+      return res.status(403).json({ error: 'Forbidden' });
+    }
+
+    await db.transaction.delete({ where: { id: numericId } });
+
+    return res.json({ success: true });
+  } catch (err) {
+    console.error('delete-transaction error:', err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 transactionsRouter.get('/balance', async (req: Request, res: Response) => {
   const { clerkUserId } = req.query;
 

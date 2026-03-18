@@ -117,6 +117,7 @@ const TransactionModal = ({ onClose }: TransactionModalProps) => {
       });
       setForm(INITIAL_FORM);
       onClose();
+      window.dispatchEvent(new CustomEvent('transaction-created'));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong');
     } finally {

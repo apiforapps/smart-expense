@@ -39,6 +39,16 @@ export const Balance = () => {
     loadBalance();
   }, [loadBalance]);
 
+  useEffect(() => {
+    const handleCreated = () => loadBalance();
+    window.addEventListener('transaction-created', handleCreated);
+    window.addEventListener('transaction-deleted', handleCreated);
+    return () => {
+      window.removeEventListener('transaction-created', handleCreated);
+      window.removeEventListener('transaction-deleted', handleCreated);
+    };
+  }, [loadBalance]);
+
   if (isLoading) {
     return (
       <div className={'balance-card'}>
