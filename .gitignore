@@ -1,6 +1,7 @@
 node_modules/
 npm-debug.*
 yarn.lock
+build/
 
 # macOS
 .DS_Store
