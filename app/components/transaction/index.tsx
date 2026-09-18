@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { LayersPlus, X } from 'lucide-react';
-import { useUser } from '@clerk/react';
 
 import { TransactionFormData } from './types';
 import { createTransaction } from './api';
@@ -37,7 +36,6 @@ const INITIAL_FORM: TransactionFormData = {
 };
 
 const TransactionModal = ({ onClose }: TransactionModalProps) => {
-  const { user } = useUser();
   const [form, setForm] = useState<TransactionFormData>(INITIAL_FORM);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -102,16 +100,11 @@ const TransactionModal = ({ onClose }: TransactionModalProps) => {
       return;
     }
 
-    if (!user?.id) {
-      setError('User not authenticated');
-      return;
-    }
-
     setIsLoading(true);
     setError(null);
 
     try {
-      await createTransaction(user.id, {
+      await createTransaction({
         ...form,
         description: formatDescription(form.description),
       });

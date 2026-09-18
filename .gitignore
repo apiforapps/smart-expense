@@ -2,7 +2,10 @@ node_modules/
 npm-debug.*
 yarn.lock
 build/
+.env
+.env.*
 
 # macOS
 .DS_Store
-/app/generated/prisma
+
+

@@ -3,18 +3,11 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import 'dotenv/config';
 
-import { usersRouter } from './server/routes/users';
-import { transactionsRouter } from './server/routes/transactions';
-
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
 app.use(express.json());
-
-// API routes
-app.use('/api', usersRouter);
-app.use('/api/transactions', transactionsRouter);
 
 // Serve frontend
 app.use(express.static('build'));

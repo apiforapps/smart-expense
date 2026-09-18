@@ -35,12 +35,6 @@ module.exports = {
     client: {
       logging: 'none',
     },
-    proxy: [
-      {
-        context: ['/api'],
-        target: 'http://localhost:5000',
-      },
-    ],
   },
   module: {
     rules: [
@@ -114,11 +108,6 @@ module.exports = {
     extensions: ['.*', '.ts', '.tsx', '.js', '.jsx'],
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.CLERK_PUBLISHABLE_KEY': JSON.stringify(
-        process.env.CLERK_PUBLISHABLE_KEY,
-      ),
-    }),
     new MiniCssExtractPlugin({
       filename: 'static/css/[name].css',
     }),

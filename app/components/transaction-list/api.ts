@@ -1,32 +1,18 @@
 import { Transaction } from './types';
+import {
+  getTransactionsByUserId,
+  deleteTransactionRecord,
+} from 'services/db';
 
 export const fetchTransactions = async (
-  clerkUserId: string,
+  userId?: string,
 ): Promise<Transaction[]> => {
-  const response = await fetch(
-    `/api/transactions?clerkUserId=${encodeURIComponent(clerkUserId)}`,
-  );
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error ?? 'Failed to fetch transactions');
-  }
-
-  return response.json() as Promise<Transaction[]>;
+  return getTransactionsByUserId(userId);
 };
 
 export const deleteTransaction = async (
   id: number,
-  clerkUserId: string,
+  userId?: string,
 ): Promise<void> => {
-  const response = await fetch(`/api/transactions/${id}`, {
-    method: 'DELETE',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ clerkUserId }),
-  });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error ?? 'Failed to delete transaction');
-  }
+  return deleteTransactionRecord(id, userId);
 };

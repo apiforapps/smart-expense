@@ -1,18 +1,9 @@
-import React, { useEffect } from 'react';
-import { SignInButton, UserButton, useAuth, useUser } from '@clerk/react';
-import { LogIn, Wallet } from 'lucide-react';
+import React from 'react';
+import { Wallet } from 'lucide-react';
 import { ThemeToggle } from 'components/theme-toggle';
-import { syncUser } from './api';
 import './Header.scss';
 
 export const Header = () => {
-  const { isSignedIn, isLoaded } = useAuth();
-  const { user } = useUser();
-
-  useEffect(() => {
-    syncUser(user);
-  }, [user]);
-
   return (
     <header className={'header'}>
       <div className={'logo'}>
@@ -24,17 +15,6 @@ export const Header = () => {
 
       <div className={'headerActions'}>
         <ThemeToggle />
-        {isLoaded &&
-          (isSignedIn ? (
-            <UserButton />
-          ) : (
-            <SignInButton mode={'modal'}>
-              <button className={'authButton'}>
-                <LogIn size={16} />
-                Login
-              </button>
-            </SignInButton>
-          ))}
       </div>
     </header>
   );

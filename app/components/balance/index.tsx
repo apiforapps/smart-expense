@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useCallback, Fragment } from 'react';
-import { useUser } from '@clerk/react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 
 import { BalanceData } from './types';
@@ -14,26 +13,23 @@ const formatAmount = (value: number): string => {
 };
 
 export const Balance = () => {
-  const { user } = useUser();
   const [data, setData] = useState<BalanceData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const loadBalance = useCallback(async () => {
-    if (!user?.id) return;
-
     setIsLoading(true);
     setError(null);
 
     try {
-      const balance = await fetchBalance(user.id);
+      const balance = await fetchBalance();
       setData(balance);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load balance');
     } finally {
       setIsLoading(false);
     }
-  }, [user?.id]);
+  }, []);
 
   useEffect(() => {
     loadBalance();

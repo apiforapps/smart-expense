@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, Fragment } from 'react';
-import { useUser } from '@clerk/react';
 import { Trash2 } from 'lucide-react';
 
 import { Transaction, TransactionGroup } from './types';
@@ -105,27 +104,24 @@ const TransactionItem = ({
 };
 
 export const TransactionList = () => {
-  const { user } = useUser();
   const [groups, setGroups] = useState<TransactionGroup[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<number | null>(null);
 
   const load = useCallback(async () => {
-    if (!user?.id) return;
-
     setIsLoading(true);
     setError(null);
 
     try {
-      const txs = await fetchTransactions(user.id);
+      const txs = await fetchTransactions();
       setGroups(groupByDate(txs));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load transactions');
     } finally {
       setIsLoading(false);
     }
-  }, [user?.id]);
+  }, []);
 
   useEffect(() => {
     load();
@@ -138,12 +134,10 @@ export const TransactionList = () => {
   }, [load]);
 
   const handleDelete = async (id: number) => {
-    if (!user?.id) return;
-
     setDeletingId(id);
 
     try {
-      await deleteTransaction(id, user.id);
+      await deleteTransaction(id);
       setGroups((prev) =>
         prev
           .map((g) => ({
